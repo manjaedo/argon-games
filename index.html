@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🕹️ ARGON ARCADE — Gemini Argon Game Collection</title>
+  <style>
+    :root {
+      --bg: #0a0b10;
+      --card-bg: #121520;
+      --card-border: #1f273d;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.35);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --neon-yellow: #facc15;
+      --neon-pink: #f43f5e;
+      --neon-green: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1rem;
+      background-image: 
+        radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 15% 90%, rgba(244, 63, 94, 0.08) 0%, transparent 40%);
+    }
+
+    header {
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 3rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.85rem;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 9999px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.75rem;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.5);
+      box-shadow: 0 12px 30px -10px var(--accent-glow);
+    }
+
+    .card-top {
+      margin-bottom: 1.5rem;
+    }
+
+    .game-icon {
+      font-size: 2.75rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .game-tag {
+      float: right;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tag-rally { background: rgba(244, 63, 94, 0.15); color: var(--neon-pink); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .tag-snake { background: rgba(34, 197, 94, 0.15); color: var(--neon-green); border: 1px solid rgba(34, 197, 94, 0.3); }
+    .tag-yasa  { background: rgba(250, 204, 21, 0.15); color: var(--neon-yellow); border: 1px solid rgba(250, 204, 21, 0.3); }
+
+    .game-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.6rem;
+    }
+
+    .game-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .feature-list li::before {
+      content: "•";
+      color: var(--accent);
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -0.2em;
+    }
+
+    .play-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.9rem;
+      background: #1e293b;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      margin-top: 1.5rem;
+    }
+
+    .game-card:hover .play-btn {
+      background: var(--accent);
+      color: #040914;
+      border-color: var(--accent);
+    }
+
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">Gemini Argon Project Collection</div>
+    <h1>🕹️ ARGON ARCADE</h1>
+    <p>제미나이 아르곤(Argon)과 함께 제작한 클래식 아케이드 게임 & 인터랙티브 웹앱 종합 모음집입니다. 아래 카드를 선택하여 바로 플레이해 보세요!</p>
+  </header>
+
+  <main class="games-grid">
+    <!-- 1. Rally-X -->
+    <article class="game-card">
+      <div class="card-top">
+        <span class="game-tag tag-rally">1980 Namco Retro</span>
+        <div class="game-icon">🏎️</div>
+        <h2 class="game-title">Rally-X (방방카 랠리-X)</h2>
+        <p class="game-desc">1980년 남코의 전설적인 미로 레이싱 게임. 연막(Smoke)을 뿜어 추격해 오는 레드카를 돌려세우고 레이더를 확인하며 깃발을 모두 수집하세요!</p>
+        <ul class="feature-list">
+          <li>실시간 레이더 미니맵 & 스페셜 깃발(S)</li>
+          <li>Web Audio 실시간 신디사이저 BGM 및 효과음</li>
+          <li>조작: 방향키 / WASD, 연막: Space 또는 Z</li>
+        </ul>
+      </div>
+      <a href="./rally-x/index.html" class="play-btn">🎮 게임 플레이 (Play Rally-X) →</a>
+    </article>
+
+    <!-- 2. Snake Byte Apple II -->
+    <article class="game-card">
+      <div class="card-top">
+        <span class="game-tag tag-snake">1982 Apple II</span>
+        <div class="game-icon">🐍</div>
+        <h2 class="game-title">Snake Byte (Apple II 복원)</h2>
+        <p class="game-desc">1982년 Sirius Software의 Apple II 명작 스네이크 바이트. DOS 3.3 디스크 부팅 인트로와 3가지 CRT 모니터 모드가 완벽히 구현된 클래식 복원작입니다.</p>
+        <ul class="feature-list">
+          <li>실제 Disk II 헤드 캘리브레이션 구동음 재현</li>
+          <li>3종 CRT 모니터 (컬러 / 주홍 / 녹색 P31 CRT)</li>
+          <li>사과 10개 수집 시 탈출문 개방 & 28개 전체 스테이지</li>
+        </ul>
+      </div>
+      <a href="./snake-byte-apple2/index.html" class="play-btn">🎮 게임 플레이 (Play Snake Byte) →</a>
+    </article>
+
+    <!-- 3. Joseon Daily Yasa -->
+    <article class="game-card">
+      <div class="card-top">
+        <span class="game-tag tag-yasa">Historical Reader</span>
+        <div class="game-icon">📜</div>
+        <h2 class="game-title">오늘의 조선 야사 (朝鮮野史錄)</h2>
+        <p class="game-desc">역사 속 오늘(양력 날짜 기준), 엄숙한 《조선왕조실록》 한 줄 기록 뒤에 숨겨진 기이한 일, 궁중 비화, 해학과 야담을 책 넘기듯 읽는 인터랙티브 리더 웹앱입니다.</p>
+        <ul class="feature-list">
+          <li>365일 실록 기록 & 야사 스토리 자동 매칭</li>
+          <li>한지 톤 라이트 모드 & 야간 독서용 다크 모드</li>
+          <li>5대 테마 카테고리 필터 & 텔레그램 알림 지원</li>
+        </ul>
+      </div>
+      <a href="./joseon-daily-yasa/index.html" class="play-btn">📖 야사 읽기 (Open Reader) →</a>
+    </article>
+  </main>
+
+  <footer>
+    <p>Crafted with 💙 by Gemini Argon & bookubooku.brothers</p>
+    <p style="margin-top: 0.5rem;"><a href="https://github.com/manjaedo/argon-games">GitHub Repository</a></p>
+  </footer>
+
+</body>
+</html>
